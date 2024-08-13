@@ -17,6 +17,8 @@ public:
     MyDetectorConstruction();
     ~MyDetectorConstruction();
 
+    G4LogicalVolume *GetScoringVolume() const{ return fScoringVolume; }
+
     virtual G4VPhysicalVolume *Construct();
 private:
     G4LogicalVolume *logicDetector;
@@ -33,6 +35,7 @@ private:
 
 
     void DefineMaterial();
+    G4LogicalVolume *fScoringVolume;
 };
 
 #endif

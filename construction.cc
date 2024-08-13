@@ -42,10 +42,8 @@ void MyDetectorConstruction::DefineMaterial()
     G4double rindexWorld[2]={1.0, 1.0};
 
 
-    Target = nist->FindOrBuildMaterial("G4_Fe");
+    Target = nist->FindOrBuildMaterial("G4_Al");
     DetectorMaterial = nist->FindOrBuildMaterial("G4_Si");
-    //Target=nist->FindOrBuildElement("Os");
-    //DetectorMaterial=nist->FindOrBuildElement("Si");
     G4MaterialPropertiesTable *mptAerogel= new G4MaterialPropertiesTable();
     mptAerogel->AddProperty("RINDEX", energy, rindexAerogel, 2);
     G4MaterialPropertiesTable *mptworld= new G4MaterialPropertiesTable();
@@ -71,10 +69,12 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct() {
 
     PhysWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "PhysWorld", 0, false, 0, true);
 
-    solidRadiator = new G4Box("solidRadiator", 0.4*m, 0.4*m, 0.05*m);
+    solidRadiator = new G4Box("solidRadiator", 0.4*m, 0.4*m, 0.01*m);
     logicalRadiator = new G4LogicalVolume(solidRadiator, Target, "logicalRadiator");
 
     physRadiator = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.25*m), logicalRadiator, "physRadiator", logicWorld, false, 0, true);
+
+    fScoringVolume = logicalRadiator;
 
     solidDetector=new G4Box("solidDetector", xWorld/nRows, yworld/nCols, 0.01*m);
 
